@@ -1,0 +1,91 @@
+﻿<Page x:Class="CarsGestion.Views.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarsGestion.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainView">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Ressources/Images/istockphoto-511733344-612x612.jpg" Grid.RowSpan="2" Stretch="UniformToFill"/>
+
+        <TextBlock Grid.Row="0" x:Name="PropLabel" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Run FontSize="40" Text="{Binding Proprietaire.Name ,Mode=OneWay}"/>
+        </TextBlock>
+        <TabControl Grid.Row="1" x:Name="TabControler" MinHeight="300" Background="Transparent">
+            <TabItem Header="Gallerie de voitures">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox x:Name="PropList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" ItemsSource="{Binding Proprietaires}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{} Nom du Proprietaire : {0} Nombre de Voitures : {1}">
+                                            <Binding Path="Name" Mode="OneWay" />
+                                            <Binding Path="VoituresCount" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding Cars}" MinWidth="400" Margin="20"  >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <TextBlock Background="LightBlue" Text="{Binding VoitureId , StringFormat='Voiture ID : {0}'}" />
+                                            <TextBlock Background="LightBlue" Text="{Binding Nom , StringFormat='Nom : {0}'}" />
+                                            <TextBlock Background="LightBlue" Text="{Binding Marque , StringFormat='Marque : {0}'}" />
+                                            <TextBlock Background="LightBlue" Text="{Binding Annee , StringFormat='Annee : {0}'}" />
+                                        </StackPanel>
+                                        <Image Source="{Binding Image}" Width="200" Height="100"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+   
+
+            </TabItem>
+            <TabItem Header="Ajoutée une voiture">
+                <StackPanel x:Name="CreateCarStackPanel">
+                    <Image Margin="10" Width="200" Height="100" x:Name="CarImage" HorizontalAlignment="Center"/>
+                    <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Click="AddImageButtonClick">Ajouter une image</Button>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Vos Voitures">
+                <ListBox x:Name="ListBoxYourCars" VerticalAlignment="Center" HorizontalAlignment="Center" ItemsSource="{Binding Proprietaire.Voitures}" MinWidth="400" Margin="20" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Orientation="Horizontal" >
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock x:Name="VoitureId" Background="LightBlue" Text="{Binding VoitureId , StringFormat='Voiture ID : {0}'}" />
+                                    <TextBlock Background="LightBlue" Text="{Binding Nom , StringFormat='Nom : {0}'}" />
+                                    <TextBlock Background="LightBlue" Text="{Binding Marque , StringFormat='Marque : {0}'}" />
+                                    <TextBlock Background="LightBlue" Text="{Binding Annee , StringFormat='Annee : {0}'}" />
+                                </StackPanel>
+                                <Image Source="{Binding Image}" Width="200" Height="100" />
+                                <Button Height="20" HorizontalAlignment="Right" Click="DeleteCarButton_Click">Supprimer</Button>
+                                
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
