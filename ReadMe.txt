@@ -1,1 +1,2 @@
-Adding project to GitHub
+School projet:
+making an application to execute CRUD operations.
